@@ -54,7 +54,11 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
                 weather.getName(),
                 CommonUtils.getDate(date),
                 CommonUtils.getTime(date),
-                CommonUtils.getIconImageUrl(weather.getIcon())
+                CommonUtils.getIconImageUrl(weather.getIcon()),
+                String.valueOf(info.getPressure()),
+                String.valueOf(info.getSea_level()),
+                CommonUtils.celciusGenerator(info.getTemp_max()),
+                CommonUtils.celciusGenerator(info.getTemp_min())
         );
     }
 
@@ -65,28 +69,38 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvTemperatur, tvWeather, tvDate, tvTime;
+        private TextView tvTemperatur, tvWeather, tvDate, tvTime, tvPressure, tvSeaLevel, tvMaxTemp, tvMinTemp;
         private ImageView ivWeather;
         private CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            cardView = itemView.findViewById(R.id.forecast_card);
+
+            ivWeather = itemView.findViewById(R.id.forecast_iv_weather);
+
             tvTemperatur = itemView.findViewById(R.id.forecast_tv_temp);
             tvDate = itemView.findViewById(R.id.forecast_tv_date);
             tvTime = itemView.findViewById(R.id.forecast_tv_time);
             tvWeather = itemView.findViewById(R.id.forecast_tv_weather);
 
-            ivWeather = itemView.findViewById(R.id.forecast_iv_weather);
-
-            cardView = itemView.findViewById(R.id.forecast_card);
+            tvPressure = itemView.findViewById(R.id.forecast_tv_pressure);
+            tvSeaLevel = itemView.findViewById(R.id.forecast_tv_sea_lvl);
+            tvMaxTemp = itemView.findViewById(R.id.forecast_tv_max_temp);
+            tvMinTemp = itemView.findViewById(R.id.forecast_tv_min_temp);
         }
 
-        private void setData(String temp, String weather, String date, String time, String imageUrl) {
+        private void setData(String temp, String weather, String date, String time, String imageUrl, String pressure, String seaLevel, String maxTemp, String minTemp) {
             tvTemperatur.setText(temp);
             tvWeather.setText(weather);
             tvDate.setText(date);
             tvTime.setText(time);
+
+            tvPressure.setText(pressure);
+            tvSeaLevel.setText(seaLevel);
+            tvMaxTemp.setText(maxTemp);
+            tvMinTemp.setText(minTemp);
 
             Glide.with(context)
                     .load(imageUrl)

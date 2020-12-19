@@ -6,8 +6,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/forecast_card"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_margin"
         app:cardCornerRadius="8dp">
 
@@ -61,6 +61,95 @@
                 android:text="@string/time"
                 android:textSize="@dimen/small_text"
                 android:textAlignment="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/extra_small_margin"
+                android:layout_marginVertical="@dimen/medium_margin"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pressure"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/small_text"/>
+
+                    <TextView
+                        android:id="@+id/forecast_tv_pressure"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pressure"
+                        android:textAlignment="center"
+                        android:textColor="@color/font"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:text="@string/sea_level"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/small_text"/>
+
+                    <TextView
+                        android:id="@+id/forecast_tv_sea_lvl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sea_level"
+                        android:textAlignment="center"
+                        android:textColor="@color/font"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temp_max"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/small_text"/>
+
+                    <TextView
+                        android:id="@+id/forecast_tv_max_temp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temp_max"
+                        android:textAlignment="center"
+                        android:textColor="@color/font"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/small_margin"
+                        android:text="@string/temp_min"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/small_text"/>
+
+                    <TextView
+                        android:id="@+id/forecast_tv_min_temp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/temp_min"
+                        android:textAlignment="center"
+                        android:textColor="@color/font"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
