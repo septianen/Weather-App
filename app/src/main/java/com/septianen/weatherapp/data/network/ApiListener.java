@@ -13,6 +13,11 @@ public interface ApiListener {
     void getForecasts(Integer id, OnGetForecasts listener);
 
 
+    /**
+     * Callback listener ...
+     * ... OnGetcities ...
+     * ... OnGetForecasts ...
+     */
     interface OnGetCities {
         void onProgress();
 

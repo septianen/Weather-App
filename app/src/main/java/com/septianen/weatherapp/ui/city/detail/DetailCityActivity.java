@@ -86,6 +86,7 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
             id = bundle.getInt("id");
             name = bundle.getString("name");
 
+            // retrieve forecast data for first time
             getForecasts();
         } else {
             // return to main screen if bundle is null
@@ -98,6 +99,7 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
         tvName.setText(name);
     }
 
+    // swipe refresh
     @Override
     public void onRefresh() {
         getForecasts();
@@ -127,6 +129,9 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
         skeleton.showOriginal();
         swipeRefreshLayout.setRefreshing(false);
 
+        // call show snack bar
+        // send coordinator layout as parent layout
+        // send OnClickListener
         showSnackBar(coordinatorLayout, getOnClickListener());
     }
 
@@ -169,7 +174,8 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
         View.OnClickListener v = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getForecasts();
+                // refresh
+                onRefresh();
             }
         };
 

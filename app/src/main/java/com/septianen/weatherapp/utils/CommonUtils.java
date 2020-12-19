@@ -26,16 +26,6 @@ public final class CommonUtils {
     }
 
     /**
-     * To hide and display keyboard ...
-     * ... call once to hide keyboard ...
-     * ... call twice to show keyboard again
-     **/
-    public static void showKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    /**
      * To show progress dialog ...
      * ... send context to handle specific android context
      * @param context
@@ -57,28 +47,13 @@ public final class CommonUtils {
     }
 
     /**
-     * To hide progress dialog ...
-     * ... send context to handle specific android context
-     * @param context
+     * to generate celcius temperature ...
+     * ... subtract by 273 to convert kelvin to celcius ...
+     * ... add °C for celcius indicator
+     *
+     * @param temp
      * @return
      */
-    public static Dialog showErrorDialog(Context context) {
-        Dialog dialog = new Dialog(context, R.style.Theme_AppCompat);
-        dialog.show();
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        }
-
-        dialog.setContentView(R.layout.dialog_error);
-        dialog.setCanceledOnTouchOutside(false);
-
-
-        TextView tvError = dialog.findViewById(R.id.error_tv);
-
-        return dialog;
-    }
-
     public static String celciusGenerator(float temp) {
 
         int celcius = (int) temp - 273;
@@ -86,10 +61,23 @@ public final class CommonUtils {
         return celcius + "°C";
     }
 
+    /**
+     * to generate image url of weather icon
+     *
+     * @param icon
+     * @return
+     */
     public static String getIconImageUrl(String icon) {
         return "https://openweathermap.org/img/wn/" + icon + "@2x.png";
     }
 
+    /**
+     * to split date from open weather API ...
+     * ... change month format to MMM
+     *
+     * @param date
+     * @return
+     */
     public static String getDate (String date) {
 
         Date newDate = null;
@@ -105,6 +93,12 @@ public final class CommonUtils {
         return resultDate;
     }
 
+    /**
+     * to split time from open weather API
+     *
+     * @param date
+     * @return
+     */
     public static String getTime (String date) {
         String split[] = date.split(" ");
 

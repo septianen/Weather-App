@@ -1,6 +1,5 @@
 package com.septianen.weatherapp.ui.city;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,11 +7,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.faltenreich.skeletonlayout.Skeleton;
 import com.faltenreich.skeletonlayout.SkeletonLayoutUtils;
-import com.google.android.material.snackbar.Snackbar;
 import com.septianen.weatherapp.R;
 import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.model.City;
@@ -50,10 +47,12 @@ public class CityActivity extends BaseActivity implements CityMvp.View, SwipeRef
 
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
 
+        // retrieve city's data for first time
         getCities();
 
     }
 
+    // swipe refresh
     @Override
     public void onRefresh() {
         getCities();
@@ -78,6 +77,9 @@ public class CityActivity extends BaseActivity implements CityMvp.View, SwipeRef
         skeleton.showOriginal();
         swipeRefreshLayout.setRefreshing(false);
 
+        // call show snack bar
+        // send coordinator layout as parent layout
+        // send OnClickListener
         showSnackBar(coordinatorLayout, getOnClickListener());
     }
 
@@ -86,12 +88,21 @@ public class CityActivity extends BaseActivity implements CityMvp.View, SwipeRef
         presenter.getCities();
     }
 
+
+    /**
+     * On click listener ...
+     * ... to handle snackbar action button ...
+     * ... retry to get forecasts data when connection error
+     *
+     * @return
+     */
     private View.OnClickListener getOnClickListener(){
 
         View.OnClickListener v = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCities();
+                // refresh
+                onRefresh();
             }
         };
 

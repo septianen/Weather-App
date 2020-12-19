@@ -49,6 +49,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
         String date = forecasts.get(position).getDate();
 
+        // set data to layout
         holder.setData(
                 CommonUtils.celciusGenerator(info.getTemp()),
                 weather.getName(),

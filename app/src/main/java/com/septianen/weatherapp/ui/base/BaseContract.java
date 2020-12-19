@@ -16,8 +16,6 @@ public interface BaseContract {
 
         void showErrorMessage(String errorMessage);
 
-        void showErrorDialog();
-
         void showLoading();
 
         void hideLoading();

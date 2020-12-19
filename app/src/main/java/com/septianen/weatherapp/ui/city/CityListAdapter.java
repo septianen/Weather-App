@@ -49,6 +49,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         String imageUrl = CommonUtils.getIconImageUrl(cities.get(position).getWeathers().get(0).getIcon());
 
 
+        // set data to layout
         holder.setData(
                 cityName,
                 imageUrl
@@ -57,6 +58,9 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // send city id to get forecasts data
+                // send city name to display on detail city activity
                 Intent intent = new Intent(context, DetailCityActivity.class);
                 intent.putExtra("id", cities.get(position).getId());
                 intent.putExtra("name", cities.get(position).getName());

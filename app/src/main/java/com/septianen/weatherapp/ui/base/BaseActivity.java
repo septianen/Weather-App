@@ -25,7 +25,6 @@ import com.septianen.weatherapp.utils.CommonUtils;
 public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View {
 
     private ProgressDialog mProgressDialog;
-    private Dialog dialog;
 
     /**
      * Display toast message ...
@@ -47,16 +46,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Display error dialog ...
-     * ... To give more specific information ...
-     * ... than a toast message
-     */
-    @Override
-    public void showErrorDialog() {
-        hideLoading();
-        dialog = CommonUtils.showErrorDialog(this);
-    }
 
     /**
      * Display progress bar ...
