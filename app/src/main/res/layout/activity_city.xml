@@ -7,9 +7,15 @@
     android:id="@+id/city_coordcinator_layout"
     tools:context=".ui.city.CityActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/city_rv_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/city_swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/city_rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

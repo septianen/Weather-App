@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,10 +31,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailCityActivity extends BaseActivity implements DetailCityMvp.View {
+public class DetailCityActivity extends BaseActivity implements DetailCityMvp.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.detail_city_coordinator_layout)
     CoordinatorLayout coordinatorLayout;
+
+    @BindView(R.id.detail_city_swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.detail_city_card)
     CardView cardView;
@@ -70,13 +74,17 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
 
         ButterKnife.bind(this);
 
+        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+
+        cardView.setVisibility(View.GONE);
+
+        rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             id = bundle.getInt("id");
             name = bundle.getString("name");
-
-            cardView.setVisibility(View.GONE);
-            rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
             getForecasts();
         } else {
@@ -91,6 +99,11 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
     }
 
     @Override
+    public void onRefresh() {
+        getForecasts();
+    }
+
+    @Override
     public void onProgress() {
         skeleton = SkeletonLayoutUtils.applySkeleton(rvForecast, R.layout.activity_detail_city, 3);
         skeleton.showSkeleton();
@@ -99,6 +112,7 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
     @Override
     public void onSuccess(List<Forecast> forecasts) {
         skeleton.showOriginal();
+        swipeRefreshLayout.setRefreshing(false);
 
         cardView.setVisibility(View.VISIBLE);
         rvForecast.setAdapter(new ForecastListAdapter(forecasts));
@@ -111,6 +125,7 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
     @Override
     public void onFailed(AppError appError) {
         skeleton.showOriginal();
+        swipeRefreshLayout.setRefreshing(false);
 
         showSnackBar(coordinatorLayout, getOnClickListener());
     }

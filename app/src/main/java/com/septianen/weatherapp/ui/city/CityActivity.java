@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -23,10 +24,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CityActivity extends BaseActivity implements CityMvp.View {
+public class CityActivity extends BaseActivity implements CityMvp.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.city_coordcinator_layout)
     CoordinatorLayout coordinatorLayout;
+
+    @BindView(R.id.city_swipe_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @BindView(R.id.city_rv_list)
     RecyclerView rvCity;
@@ -44,8 +48,15 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
 
         rvCity.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+
         getCities();
 
+    }
+
+    @Override
+    public void onRefresh() {
+        getCities();
     }
 
     @Override
@@ -57,6 +68,7 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
     @Override
     public void onSuccess(List<City> cities) {
         skeleton.showOriginal();
+        swipeRefreshLayout.setRefreshing(false);
 
         rvCity.setAdapter(new CityListAdapter(cities));
     }
@@ -64,6 +76,7 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
     @Override
     public void onFailed(AppError appError) {
         skeleton.showOriginal();
+        swipeRefreshLayout.setRefreshing(false);
 
         showSnackBar(coordinatorLayout, getOnClickListener());
     }
@@ -84,4 +97,6 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
 
         return v;
     }
+
+
 }
