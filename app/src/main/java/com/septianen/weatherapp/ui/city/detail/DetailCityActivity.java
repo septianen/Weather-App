@@ -2,6 +2,7 @@ package com.septianen.weatherapp.ui.city.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.model.Forecast;
 import com.septianen.weatherapp.data.network.ApiRepository;
 import com.septianen.weatherapp.ui.base.BaseActivity;
+import com.septianen.weatherapp.ui.city.CityPresenter;
 import com.septianen.weatherapp.utils.CommonUtils;
 
 import java.util.List;
@@ -29,6 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailCityActivity extends BaseActivity implements DetailCityMvp.View {
+
+    @BindView(R.id.detail_city_coordinator_layout)
+    CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.detail_city_card)
     CardView cardView;
@@ -73,8 +78,10 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
             cardView.setVisibility(View.GONE);
             rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-            presenter = new DetailCityPresenter(this, new ApiRepository(this));
-            presenter.getForecasts(id);
+            getForecasts();
+        } else {
+            // return to main screen if bundle is null
+            returnToMainScreen(DetailCityActivity.this);
         }
 
     }
@@ -91,7 +98,7 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
 
     @Override
     public void onSuccess(List<Forecast> forecasts) {
-        hideLoading();
+        skeleton.showOriginal();
 
         cardView.setVisibility(View.VISIBLE);
         rvForecast.setAdapter(new ForecastListAdapter(forecasts));
@@ -99,14 +106,13 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
         setTvName();
         setCardData(forecasts.get(0));
 
-
     }
 
     @Override
     public void onFailed(AppError appError) {
+        skeleton.showOriginal();
 
-        hideLoading();
-        showErrorMessage(appError.getErrorMessage());
+        showSnackBar(coordinatorLayout, getOnClickListener());
     }
 
     private void setCardData(Forecast forecast) {
@@ -126,8 +132,32 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
 
         Glide.with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.base_image_view)
                 .apply(new RequestOptions().centerCrop())
                 .into(ivWeather);
+    }
+
+    private void getForecasts() {
+        presenter = new DetailCityPresenter(this, new ApiRepository(this));
+        presenter.getForecasts(id);
+    }
+
+    /**
+     * On click listener ...
+     * ... to handle snackbar action button ...
+     * ... retry to get forecasts data when connection error
+     *
+     * @return
+     */
+    private View.OnClickListener getOnClickListener(){
+
+        View.OnClickListener v = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getForecasts();
+            }
+        };
+
+        return v;
     }
 }

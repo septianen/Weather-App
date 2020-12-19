@@ -3,12 +3,17 @@ package com.septianen.weatherapp.ui.base;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.septianen.weatherapp.R;
+import com.septianen.weatherapp.ui.city.CityActivity;
 import com.septianen.weatherapp.utils.CommonUtils;
 
 /**
@@ -75,13 +80,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     }
 
     @Override
-    public void hideKeyboard() {
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+    public void returnToMainScreen(Context context) {
+        Intent intent = new Intent(context, CityActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
     }
 
+    @Override
+    public void showSnackBar(CoordinatorLayout coordinatorLayout, View.OnClickListener view) {
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.connection_error, Snackbar.LENGTH_LONG);
+        snackbar.setAction(R.string.retry, view);
+        snackbar.setActionTextColor(getResources().getColor(R.color.accent));
+
+        snackbar.show();
+    }
 }

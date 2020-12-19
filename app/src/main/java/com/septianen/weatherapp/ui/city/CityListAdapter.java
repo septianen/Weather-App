@@ -18,6 +18,7 @@ import com.septianen.weatherapp.R;
 import com.septianen.weatherapp.data.ConstData;
 import com.septianen.weatherapp.data.model.City;
 import com.septianen.weatherapp.ui.city.detail.DetailCityActivity;
+import com.septianen.weatherapp.utils.CommonUtils;
 
 import java.util.List;
 
@@ -45,10 +46,13 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         String cityName = cities.get(position).getName();
-        String imageUrl = "https://openweathermap.org/img/wn/"+ cities.get(position).getWeathers().get(0).getIcon() + "@2x.png";
+        String imageUrl = CommonUtils.getIconImageUrl(cities.get(position).getWeathers().get(0).getIcon());
 
 
-        holder.setData(cityName, imageUrl);
+        holder.setData(
+                cityName,
+                imageUrl
+        );
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
