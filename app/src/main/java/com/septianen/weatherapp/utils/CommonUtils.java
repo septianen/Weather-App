@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.septianen.weatherapp.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,30 +79,36 @@ public final class CommonUtils {
         return dialog;
     }
 
-    public static String targetDateGenerator(int additionalYear) {
-        Date date = Calendar.getInstance().getTime();
+    public static String celciusGenerator(float temp) {
 
-        SimpleDateFormat year = new SimpleDateFormat("yyyy");
-        int countYear = Integer.parseInt(year.format(date)) + additionalYear;
+        int celcius = (int) temp - 273;
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-");
-        String newDate = simpleDateFormat.format(date);
-
-        return newDate+countYear;
+        return celcius + "°C";
     }
 
-    public static int getYearFromDate (String date) {
+    public static String getIconImageUrl(String icon) {
+        return "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+    }
+
+    public static String getDate (String date) {
+
+        Date newDate = null;
+        try {
+            newDate = new SimpleDateFormat("dd-MM-yy hh:mm:ss").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        String resultDate = simpleDateFormat.format(newDate);
+
+        return resultDate;
+    }
+
+    public static String getTime (String date) {
         String split[] = date.split(" ");
-        int targetYear = Integer.parseInt(split[2]);
 
-        Date currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
-        String year = simpleDateFormat.format(currentDate);
-        int currentYear = Integer.parseInt(year);
-
-        int goalYear = targetYear - currentYear;
-
-        return goalYear;
+        return split[1];
     }
 
 

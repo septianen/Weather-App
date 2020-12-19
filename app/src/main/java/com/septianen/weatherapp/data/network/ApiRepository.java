@@ -5,6 +5,7 @@ import android.content.Context;
 import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.ConstData;
 import com.septianen.weatherapp.data.model.CityResponse;
+import com.septianen.weatherapp.data.model.ForecastResponse;
 import com.septianen.weatherapp.utils.NetworkUtils;
 
 import java.net.HttpURLConnection;
@@ -18,18 +19,17 @@ public class ApiRepository implements ApiListener {
     private Context context;
     private Retrofit retrofit;
 
-
+    private ApiService apiService;
 
     public ApiRepository(Context context) {
         this.context = context;
 
         retrofit = NetworkUtils.buildRetrofit(context);
+        apiService = retrofit.create(ApiService.class);
     }
 
     @Override
     public void getCities(String idBundle, OnGetCities listener) {
-
-        ApiService apiService = retrofit.create(ApiService.class);
 
         listener.onProgress();
 
@@ -54,7 +54,24 @@ public class ApiRepository implements ApiListener {
 
     @Override
     public void getForecasts(Integer id, OnGetForecasts listener) {
+        listener.onProgress();
 
+        Call<ForecastResponse> call = apiService.getForecasts(id, ConstData.API.API_KEY, 8);
 
+        call.enqueue(new Callback<ForecastResponse>() {
+            @Override
+            public void onResponse(Call<ForecastResponse> call, retrofit2.Response<ForecastResponse> response) {
+                if (response.isSuccessful()) {
+                    listener.onSuccess(response.body().getForecasts());
+                } else {
+                    listener.onFailed(new AppError(response.code(), response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForecastResponse> call, Throwable t) {
+                listener.onFailed(new AppError(500, t.getMessage()));
+            }
+        });
     }
 }

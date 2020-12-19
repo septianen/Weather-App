@@ -1,6 +1,7 @@
 package com.septianen.weatherapp.ui.city;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.septianen.weatherapp.R;
 import com.septianen.weatherapp.data.ConstData;
 import com.septianen.weatherapp.data.model.City;
+import com.septianen.weatherapp.ui.city.detail.DetailCityActivity;
 
 import java.util.List;
 
@@ -47,6 +49,16 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
 
 
         holder.setData(cityName, imageUrl);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailCityActivity.class);
+                intent.putExtra("id", cities.get(position).getId());
+                intent.putExtra("name", cities.get(position).getName());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
