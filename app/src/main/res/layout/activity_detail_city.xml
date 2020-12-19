@@ -9,10 +9,12 @@
     android:id="@+id/detail_city_coordinator_layout"
     tools:context=".ui.city.detail.DetailCityActivity">
 
+
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/detail_city_swipe_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,23 +101,31 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/large_margin"
-                android:text="@string/forecast"
-                android:textAlignment="center"
-                android:textColor="@color/dark_font"
-                android:textSize="@dimen/extra_large_text"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/city_rv_forecast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/small_margin" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_margin"
+                    android:text="@string/forecast"
+                    android:textAlignment="center"
+                    android:textColor="@color/dark_font"
+                    android:textSize="@dimen/extra_large_text"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/city_rv_forecast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/small_margin" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

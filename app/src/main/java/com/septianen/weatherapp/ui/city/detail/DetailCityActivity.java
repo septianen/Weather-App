@@ -1,6 +1,5 @@
 package com.septianen.weatherapp.ui.city.detail;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,10 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,7 +20,6 @@ import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.model.Forecast;
 import com.septianen.weatherapp.data.network.ApiRepository;
 import com.septianen.weatherapp.ui.base.BaseActivity;
-import com.septianen.weatherapp.ui.city.CityPresenter;
 import com.septianen.weatherapp.utils.CommonUtils;
 
 import java.util.List;
@@ -79,7 +75,6 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
         cardView.setVisibility(View.GONE);
 
         rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
