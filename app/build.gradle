@@ -58,5 +58,7 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
+    // skeleton loading
+    implementation 'com.faltenreich:skeletonlayout:2.1.0'
 
 }

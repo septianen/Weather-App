@@ -16,4 +16,6 @@
     <color name="dark_font">#242424</color>
     <color name="font">#484848</color>
 
+    <color name="gray">#9A9A9A</color>
+
 </resources>

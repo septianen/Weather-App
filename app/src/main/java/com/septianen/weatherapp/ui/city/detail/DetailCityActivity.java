@@ -1,16 +1,21 @@
 package com.septianen.weatherapp.ui.city.detail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.faltenreich.skeletonlayout.Skeleton;
+import com.faltenreich.skeletonlayout.SkeletonLayoutUtils;
 import com.septianen.weatherapp.R;
 import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.model.Forecast;
@@ -24,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DetailCityActivity extends BaseActivity implements DetailCityMvp.View {
+
+    @BindView(R.id.detail_city_card)
+    CardView cardView;
 
     @BindView(R.id.city_rv_forecast)
     RecyclerView rvForecast;
@@ -45,6 +53,8 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
 
     private DetailCityPresenter presenter;
 
+    private Skeleton skeleton;
+
     private String name;
     private Integer id;
 
@@ -60,7 +70,8 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
             id = bundle.getInt("id");
             name = bundle.getString("name");
 
-            setTvName();
+            cardView.setVisibility(View.GONE);
+            rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
             presenter = new DetailCityPresenter(this, new ApiRepository(this));
             presenter.getForecasts(id);
@@ -74,17 +85,21 @@ public class DetailCityActivity extends BaseActivity implements DetailCityMvp.Vi
 
     @Override
     public void onProgress() {
-        showLoading();
+        skeleton = SkeletonLayoutUtils.applySkeleton(rvForecast, R.layout.activity_detail_city, 3);
+        skeleton.showSkeleton();
     }
 
     @Override
     public void onSuccess(List<Forecast> forecasts) {
         hideLoading();
 
+        cardView.setVisibility(View.VISIBLE);
+        rvForecast.setAdapter(new ForecastListAdapter(forecasts));
+
+        setTvName();
         setCardData(forecasts.get(0));
 
-        rvForecast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        rvForecast.setAdapter(new ForecastListAdapter(forecasts));
+
     }
 
     @Override

@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import com.faltenreich.skeletonlayout.Skeleton;
+import com.faltenreich.skeletonlayout.SkeletonLayoutUtils;
 import com.septianen.weatherapp.R;
 import com.septianen.weatherapp.data.AppError;
 import com.septianen.weatherapp.data.model.City;
@@ -22,6 +24,8 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
     @BindView(R.id.city_rv_list)
     RecyclerView rvCity;
 
+    private Skeleton skeleton;
+
     private CityPresenter presenter;
 
     @Override
@@ -31,20 +35,25 @@ public class CityActivity extends BaseActivity implements CityMvp.View {
 
         ButterKnife.bind(this);
 
+        rvCity.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
         presenter = new CityPresenter(this, new ApiRepository(this));
         presenter.getCities();
+
     }
 
     @Override
     public void onProgress() {
-        showLoading();
+        skeleton = SkeletonLayoutUtils.applySkeleton(rvCity, R.layout.list_city, 3);
+        skeleton.showSkeleton();
     }
 
     @Override
     public void onSuccess(List<City> cities) {
         hideLoading();
 
-        rvCity.setLayoutManager(new LinearLayoutManager(this));
+        skeleton.showOriginal();
+
         rvCity.setAdapter(new CityListAdapter(cities));
     }
 

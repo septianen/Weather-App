@@ -6,9 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/detail_city_frame"
     tools:context=".ui.city.detail.DetailCityActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/detail_city_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/extra_large_margin"
@@ -65,7 +67,7 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="@dimen/medium_margin"
                     android:layout_marginHorizontal="@dimen/extra_large_margin"
-                    android:src="@color/accent"
+                    android:src="@color/gray"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 

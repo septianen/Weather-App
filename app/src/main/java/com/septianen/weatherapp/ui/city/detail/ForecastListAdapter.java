@@ -104,7 +104,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
 
             Glide.with(context)
                     .load(imageUrl)
-                    .placeholder(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.base_image_view)
                     .apply(new RequestOptions().centerCrop())
                     .into(ivWeather);
         }

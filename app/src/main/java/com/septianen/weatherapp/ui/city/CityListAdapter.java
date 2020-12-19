@@ -85,7 +85,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
 
             Glide.with(context)
                 .load(imageUrl)
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.base_image_view)
                 .apply(new RequestOptions().centerCrop())
                 .into(ivIcon);
         }
