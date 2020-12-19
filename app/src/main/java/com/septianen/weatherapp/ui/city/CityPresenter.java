@@ -19,7 +19,8 @@ public class CityPresenter implements CityMvp.Presenter{
 
     @Override
     public void getCities() {
-        String idBundle = "1621500,1621459,1621520";
+        // Jakarta, Medan, Manado
+        String idBundle = "1642911,1214520,1636544";
 
         apiRepository.getCities(idBundle, new ApiListener.OnGetCities() {
             @Override
