@@ -41,14 +41,14 @@ public final class NetworkUtils {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         // uncomment to enable chucker
-        ChuckerInterceptor chuckerInterceptor = new ChuckerInterceptor(context);
+//        ChuckerInterceptor chuckerInterceptor = new ChuckerInterceptor(context);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(false)
                 .addInterceptor(loggingInterceptor)
-                .addInterceptor(chuckerInterceptor) // uncomment to enable chucker
+//                .addInterceptor(chuckerInterceptor) // uncomment to enable chucker
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()

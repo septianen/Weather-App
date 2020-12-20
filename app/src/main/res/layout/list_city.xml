@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/medium_margin"
                 android:text="@string/city"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_font"
                 android:textSize="@dimen/extra_large_text"
                 android:textStyle="bold"
                 android:layout_weight="1"/>
